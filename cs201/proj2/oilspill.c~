@@ -1,0 +1,504 @@
+/************************************************************************
+ ** File:    oilspill.c
+ ** Author:  Yakubu Nazif Wanka
+ ** Date:    4/22/06
+ ** Section: 0101
+ ** E-mail:  yakubu1@umbc.edu
+ **
+ ** This program contains the functions used in pro2.c. The main function
+ ** ChangeValue is the one that is actually used in proj2.c. This function
+ ** calls the functions NorthWind, EastWind, etc depending on where the
+ ** wind is blowing from.
+ *************************************************************************/
+
+#include<stdio.h>
+#include<stdlib.h>
+#include "oilspill.h"
+#include "graphicshelper.h"
+#define SIZE 15
+
+void ChangeValue(int gallons[15][15], int direction, int interval, int time)
+{
+  int i, j, k;
+  
+  /*Original Array*/
+  printf("Time: 0\n");
+  for(i = 0; i < SIZE; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{
+	  printf("%4d", gallons[i][j]);
+	}
+      printf("\n");
+    }
+  CreatePPM(gallons, 0);
+
+  /*****************************************
+    Changes Array based on wind direction n
+    times where n is the number of frames
+  *****************************************/
+  for(k = 1; k < time + 1; k++)
+    {
+      switch(direction)
+	{
+	case 1:
+	  SouthWind(gallons);
+	  break;
+	case 2:
+	  EastWind(gallons);
+	  break;
+	case 3:
+	  NorthWind(gallons);
+	  break;
+	default:
+	  WestWind(gallons);
+	  break;
+	}
+
+      /*Prints the modified array for every interval within the time*/
+      if(k % interval == 0)
+	{ 
+	  printf("\nTime: %d\n", k);
+	  CreatePPM(gallons, k);
+	  for(i = 0; i < 15; i++)
+	    {
+	      for(j = 0; j < 15; j++)
+		{
+		  printf("%4d", gallons[i][j]);
+	     }
+	      printf("\n");
+	    }
+	  printf("\n\n");
+	}
+    }
+
+  int numFrames = (time / interval) + 1;
+  /*Creates animation from the PPM file that is created after each step*/
+  ShowOilSpill(numFrames, interval);
+
+  return;
+}
+
+
+/**********************************************
+ ** WestWind(int gallons[][])
+ **    This function changes the array so that
+ ** the oil is seen to move as though the wind
+ ** were blowing from the west.
+ **      Inputs: Original Array
+ **      Outputs: Modified Array
+ **********************************************/
+void WestWind(int gallons[SIZE][SIZE])
+{
+   int i, j;
+ /*Creat new array for temporary purposes*/
+  double modoil[SIZE][SIZE];
+
+
+  /*Fill the new array with 0s*/
+  for(i = 0; i < SIZE; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{
+	  modoil[i][j] = 0;
+	}
+    }
+  /*Fill new array with modified values of original array*/
+  for(i = 0; i < 15; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{	  
+	 
+/* 	  If statements are used to modify the values due to the */
+/* 	    fact that numbers tend to go over the edge of the line */
+/* 	    in arrays and continue adding on the next line. Therefore */
+/* 	    the borders of the array must be rigidly controlled */
+
+	  /*For the top-left corner to avoid run over numbers*/
+	  if(i == 0 && j == 0)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i+1][j] / 20;
+	    }
+	  /*For the top line*/
+	  else if(i == 0 && j <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i+1][j] / 20;		   
+	      modoil[i][j] += gallons[i][j - 1] / 5;
+	      modoil[i][j] += gallons[i+1][j-1] / 10;
+	    }
+	  /*For the left line*/
+	  else if(i <= 14 && j == 0)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i+1][j] / 20;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	    }
+	  /*For the bottom right corner*/
+	  else if(i == 14 && j == 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	      modoil[i][j] += gallons[i-1][j-1] / 10;
+	      modoil[i][j] += gallons[i][j - 1] / 5;
+	    }
+	  /*For the top right corner*/
+	  else if(i == 0 && j == 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i+1][j] / 20; 
+	      modoil[i][j] += gallons[i][j - 1] / 5;
+	      modoil[i][j] += gallons[i+1][j - 1] / 10;
+	    }
+	  /*For the bottom left corner*/
+	  else if(i == 14 && j == 0)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	    }
+	  /*For the bottom line*/
+	  else if(i == 14 && j <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	      modoil[i][j] += gallons[i-1][j-1] / 10;
+	      modoil[i][j] += gallons[i][j - 1] / 5; 
+	    }
+	  /*For the right line*/
+	  else if(i <= 14 && j == 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	      modoil[i][j] += gallons[i-1][j-1] / 10;
+	      modoil[i][j] += gallons[i][j - 1] / 5; 
+	    }
+	  /*For everything inside the array*/
+	  else
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i+1][j] / 20;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	      modoil[i][j] += gallons[i-1][j-1] / 10;
+	      modoil[i][j] += gallons[i][j - 1] / 5;
+	      modoil[i][j] += gallons[i+1][j-1] / 10;
+	    }
+	}
+    }
+  /*The values of the original array are changed to that of*/
+  /*  the modified array this becomes your new original */
+  /* value with which the next step is calculated with */
+ 
+  for(i = 0; i < SIZE; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{
+	  gallons[i][j] = modoil[i][j];
+	}
+    }
+  return;
+}
+
+
+
+/**********************************************
+ ** EastWind(int gallons[][])
+ **    This function changes the array so that
+ ** the oil is seen to move as though the wind
+ ** were blowing from the east.
+ **      Inputs: Original Array
+ **      Outputs: Modified Array
+ **********************************************/
+void EastWind(int gallons[SIZE][SIZE])
+{
+  double modoil[SIZE][SIZE];
+  int i, j;
+  for(i = 0; i < SIZE; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{
+	  modoil[i][j] = 0;
+	}
+    }
+  for(i = 0; i < 15; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{	  
+	  if(i == 0 && j == 0)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i+1][j] / 20;
+	    }
+	  else if(i == 0 && j <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i+1][j] / 20;		   
+	      modoil[i][j] += gallons[i][j + 1] / 5;
+	      modoil[i][j] += gallons[i+1][j+1] / 10;
+	    }
+	  else if(i <= 14 && j == 0)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	      modoil[i][j] += gallons[i-1][j+1] / 10;
+	      modoil[i][j] += gallons[i][j + 1] / 5;
+	    }
+	  else if(i == 14 && j == 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	    }
+	  else if(i == 0 && j == 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i+1][j] / 20;
+	    }
+	  else if(i == 14 && j == 0)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	      modoil[i][j] += gallons[i-1][j+1] / 10;
+	      modoil[i][j] += gallons[i][j + 1] / 5;
+	    }
+	  else if(i == 14 && j <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	      modoil[i][j] += gallons[i-1][j+1] / 10;
+	      modoil[i][j] += gallons[i][j + 1] / 5; 
+	    }
+	  else if(i <= 14 && j == 14)
+	    { 
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i+1][j] / 20;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	    }
+	  else
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i+1][j] / 20;
+	      modoil[i][j] += gallons[i - 1][j] / 20;
+	      modoil[i][j] += gallons[i-1][j+1] / 10;
+	      modoil[i][j] += gallons[i][j + 1] / 5;
+	      modoil[i][j] += gallons[i+1][j+1] / 10;
+	    }
+	}
+    }
+  for(i = 0; i < SIZE; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{
+	  gallons[i][j] = modoil[i][j];
+	}
+    }
+  return;
+}
+
+
+/**********************************************
+ ** SouthWind(int gallons[][])
+ **    This function changes the array so that
+ ** the oil is seen to move as though the wind
+ ** were blowing from the south.
+ **      Inputs: Original Array
+ **      Outputs: Modified Array
+ **********************************************/
+void SouthWind(int gallons[SIZE][SIZE])
+{
+  double modoil[SIZE][SIZE];
+  int i, j;
+  for(i = 0; i < SIZE; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{
+	  modoil[i][j] = 0;
+	}
+    }
+  for(i = 0; i < 15; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{	  
+	  if (i == 0 && j ==0)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j+1] / 20;
+	    }
+	  else if (i == 0 && j <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	      modoil[i][j] += gallons[i][j+1] / 20;
+	    }
+	  else if (i == 0 && j == 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	    }
+	  else if (j == 14 && i <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	      modoil[i][j] += gallons[i-1][j-1] / 10;
+	      modoil[i][j] += gallons[i-1][j] / 5;
+	    }
+	  else if (i == 14 && j == 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	      modoil[i][j] += gallons[i-1][j-1] / 10;
+	      modoil[i][j] += gallons[i-1][j] / 5;
+	    }
+	  else if (i == 14 && j <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	      modoil[i][j] += gallons[i-1][j-1] / 10;
+	      modoil[i][j] += gallons[i-1][j] / 5;
+	      modoil[i][j] += gallons[i-1][j+1] / 10;
+	      modoil[i][j] += gallons[i][j+1] / 20;
+	    }
+	  else if (i == 14 &&  j == 0)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i-1][j] / 5;
+	      modoil[i][j] += gallons[i-1][j+1] / 10;
+	      modoil[i][j] += gallons[i][j+1] / 20;
+	    }
+	  else if(j == 0 && i <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] /2;
+	      modoil[i][j] += gallons[i-1][j] / 5;
+	      modoil[i][j] += gallons[i-1][j+1] /10;
+	      modoil[i][j] += gallons[i][j+1] / 20;
+	    }
+	  else 
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	      modoil[i][j] += gallons[i-1][j-1] / 10;
+	      modoil[i][j] += gallons[i-1][j] / 5;
+	      modoil[i][j] += gallons[i-1][j+1] / 10;
+	      modoil[i][j] += gallons[i][j+1] / 20;
+	    }
+	}
+    }
+  for(i = 0; i < SIZE; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{
+	  gallons[i][j] = modoil[i][j];
+	}
+    }
+  return;
+}
+
+
+
+/**********************************************
+ ** NorthWind(int gallons[][])
+ **    This function changes the array so that
+ ** the oil is seen to move as though the wind
+ ** were blowing from the north.
+ **      Inputs: Original Array
+ **      Outputs: Modified Array
+ **********************************************/
+void NorthWind(int gallons[SIZE][SIZE])
+{
+  double modoil[SIZE][SIZE];
+  int i, j;
+  for(i = 0; i < SIZE; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{
+	  modoil[i][j] = 0;
+	}
+    }
+  for(i = 0; i < SIZE; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{	  
+	  if (i == 0 && j ==0)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j+1] / 20;
+	      modoil[i][j] += gallons[i+1][j] / 5;
+	    }
+	  else if (i == 0 && j <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	      modoil[i][j] += gallons[i+1][j-1] / 10;
+	      modoil[i][j] += gallons[i+1][j] / 5;
+	    }
+	  else if (i == 0 && j == 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	      modoil[i][j] += gallons[i+1][j-1] / 10;
+	      modoil[i][j] += gallons[i+1][j] / 5;
+	    }
+	  else if (j == 14 && i <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	    }
+	  else if (i == 14 && j == 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	    }
+	  else if (i == 14 && j <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	    }
+	  else if (i == 14 &&  j == 0)
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i+1][j+1] / 10;
+	      modoil[i][j] += gallons[i][j+1] / 20;
+	    }
+	  else if(j == 0 && i <= 14)
+	    {
+	      modoil[i][j] = gallons[i][j] /2;
+	      modoil[i][j] += gallons[i+1][j] / 5;
+	    }
+	  else 
+	    {
+	      modoil[i][j] = gallons[i][j] / 2;
+	      modoil[i][j] += gallons[i][j-1] / 20;
+	      modoil[i][j] += gallons[i+1][j-1] / 10;
+	      modoil[i][j] += gallons[i+1][j] / 5;
+	      modoil[i][j] += gallons[i+1][j+1] / 10;
+	      modoil[i][j] += gallons[i][j+1] / 20;
+	    }
+	}
+    }
+  for(i = 0; i < SIZE; i++)
+    {
+      for(j = 0; j < SIZE; j++)
+	{
+	  gallons[i][j] = modoil[i][j];
+	}
+    }
+  return;
+}
+
+/****************************************
+ ** PrintGreeting
+ **     This function prints a greeting
+ **  to the user.
+ **     Inputs: None
+ **     Outputs:Greeting
+ ****************************************/
+void PrintGreeting(void)
+{
+  printf("               OIlSPILL!!!                            \n");
+  printf("******************************************************\n");
+  printf("*This program will simulate an oil spill depending on*\n");
+  printf("*randomly generated wind direction and show it in the*\n");
+  printf("*form of an animated .gif file.                      *\n");
+  printf("******************************************************\n");
+
+  return;
+}

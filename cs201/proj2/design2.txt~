@@ -1,0 +1,117 @@
+/*******************************************
+* File: design2.txt
+* Author: Yakubu Nazif Wanka
+* Date: 10/12/2008
+* Section: 101
+* Email: yakubu1@umbc.edu
+*
+* Design for Project #2
+*********************************************/
+
+/*********** Format, of code*****************/
+include stdio.h
+include stdlib.h
+include time.h
+
+int main()
+{
+	for every interval until time
+	{
+		get values from oilspill.dat
+		get time interval
+		get total time
+		randomly generate wind direction
+		creat 2-d array 15 by 15
+		fill array with 0
+		fill array with values from oilspill515.dat
+		call function ChangeValue to change the values according to
+		wind direction
+		print modified array
+		Create image of oilspill
+	}
+	Show Oil Spill
+}
+/****************************************************************************/
+
+Functions Used:
+
+/********************************************************
+ ** Function: SetRandomSeed
+ ** Usage:    SetRandomSeed();
+ **
+ ** The pseudo-random number generator is seeded
+ ** with a call to time() assuring a different
+ ** seed everytime the program runs.
+ **
+ ** Inputs: None
+ ** Output: No value is returned
+ *********************************************************/
+void SetRandomSeed (void);
+
+/*********************************************************
+ ** Function: GetRandomNumber
+ ** Usage:    x = GetRandomNumber();
+ **
+ ** GetRandomNumber() returns a random number between low
+ ** and high in this case being 1 and 4 in order to
+ ** determine the wind direction of the oilspill.
+ **
+ ** Inputs: low - an int which is the lowest value in this
+ **	    case being 1 which represents north
+ **         high - an int which is the highest value in
+ **	    this case being 4 which is west.
+ ** Output: returns a random integer between low and
+ **         high, which then represents the wind direction
+ *********************************************************/
+int GetRandomNumber (int low, int high);				
+
+/**********************************************************************
+ ** Function:	ChangeValue
+ ** Usage:	int x[SIZE][SIZE] = ChangeValue(int array[SIZE][SIZE]);
+ **
+ ** ChangeValue() takes in the 2 dimensional array with all the
+ ** values of oil and distributes them to simulate the spreading
+ ** of the oil.
+ **
+ ** Inputs:	The 2 dimensional array
+ ** Outputs:	The modified 2 dimensional array
+ **********************************************************************/
+
+/**********************************************************
+** CreatePPM --
+** This function creates a PPM picture file from an Array.
+**
+** Inputs: Array of integers, time of creation
+** Output: NONE
+**********************************************************/
+
+void CreatePPM(int array [][15], int time);
+
+/****************************************************************
+** ShowOilSpill --
+** This function creates an animated gif from PPM files in your
+** directory.
+**
+** Inputs: Number of images, increment of filenames
+** Output: NONE
+****************************************************************/
+
+void ShowOilSpill(int numFrames, int step);
+
+/*****************************************************************************
+	When the program is excecuted by the user using whichever data
+** file they choose, the program gets the information from the data file
+** including(in this order), the time interval, and the total time. After the
+** array and every other variable needed has been declared, The
+** first thing the program does is initiate a for loop while i is less
+** than total time for everytime interval. This allows the program to
+** repeat itself for only a given time period. At this point the wind 
+** direction is randomly determined,
+**	Once those are taken care of, then the 2 dimensional array is filled
+** (using another for loop) with the values from the data file. At this point,
+** using the function ChangeValues, the program will modify the values of the 
+** array by distributing them according to how they are supposed to be in the
+** simulation. After words the modified array is printed and an image is 
+** generated. This then starts all over again, until the given time is reached
+** at which point an animation using ShowOilSPill is created.
+******************************************************************************/

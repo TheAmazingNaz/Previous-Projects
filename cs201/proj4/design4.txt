@@ -1,0 +1,139 @@
+/**********************************************                          
+*  File: design4.txt
+*  Author: Yakubu Nazif Wanka
+*  Date: 11/16/2008
+*  Section: 101
+*  E-Mail: yakubu1@umbc.edu
+*  
+*  Design for Project #4
+**********************************************/
+
+/*******************Format********************/
+int main()
+{
+	PrintGreeting
+	do
+	{
+	   PrintMainMenu
+	   switch(choice)
+	   P-->Print Encryption Key Table
+	   F-->Encrypt or Decrypt Files by calling:
+	   TranslateFile(), or DecryptFile()
+	   S --> Translate or Encrypt User input by calling:
+	   TranslateString, or EncryptString
+	   Q--> Quit Program
+	 }while(choice != 'Q' || choice != 'q')
+	 
+}
+
+	
+/************** Pound Defines and Typedefs ********************/
+
+typedef struct key    
+{	
+    char input;
+    char output; 
+}KEYS; 
+
+#define ELEMENT 3
+#define NUMLETTERS 80
+
+
+/******************************Functions Used******************************/
+
+/*************************************************************************
+ * Function: Hailstones
+ * 
+ * This is a recursive function that returns any element of the Hailstone
+ * of any given number
+ *
+ * Inputs : Number, element. 
+ * Outputs: Hailstone sequence result.
+ **************************************************************************/
+int Hailstones(int num, int times);
+
+/**************************************************************************
+ * Function: TranslateString
+ *
+ * This is a function that asks the user for any string then encrypts it.
+ *
+ * Inputs:None
+ * Outputs: Encrypted String.
+ **************************************************************************/
+ void TranslateString();
+
+/**************************************************************************
+ * Function: TranslateFile
+ * 
+ * This function encrypts any file after asking the user for the filename 
+ * and places the output in any given output file.
+ *
+ * Inputs: None
+ * Outputs:Encrypted file.
+ **************************************************************************/
+ void TranslateFile();
+
+/**************************************************************************
+ * Function: PrintMenu
+ *
+ * This function prints the menu showing the user the list of options that
+ * can be done by the program.
+ *
+ * Inputs: None
+ * Outputs:Printed Menu
+ ***************************************************************************/
+ void PrintMenu();
+
+/***************************************************************************
+ * Function: PrintSMenu
+ *
+ * This function prints the second Menu for the S and F choices asking the
+ * user whether they want to encrypt or decrypt a file or string
+ *
+ * Inputs: None
+ * Output: Printed Menu
+ ***************************************************************************/
+ void PrintSMenu();
+
+/***************************************************************************
+ * Function: PrinptKeyTable
+ * 
+ * This function prints the encryption key table for the user
+ *
+ * Inputs: None
+ * Output: Printed Table
+ ***************************************************************************/ 
+ void PrintKeyTable();
+
+/**************************************************************************
+ * Function: DecryptString
+ *
+ * This is a function that asks the user for any string then decrypts it.
+ *
+ * Inputs:None
+ * Outputs: Decrypted String.
+ **************************************************************************/
+ void DecryptString();
+
+/**************************************************************************
+ * Function: DecryptFile
+ * 
+ * This function decrypts any file after asking the user for the filename 
+ * and places the output in any given output file.
+ *
+ * Inputs: None
+ * Outputs:Decrypted file.
+ **************************************************************************/
+ void DecryptFile();
+
+/*****************************Explanation*********************************/
+	Basically, what I intend to do, is Print the Greeting, then the
+ menu, using the functions specified, then using a switch structure, depen
+ ding on the users' choice whether uppercase or lowercase, execute whichever
+ function carries out whichever task. If the user chooses to Print the key,
+ I use PRintKeyTable, if they choose to encrypt or decrypt a file, the
+ another menu is brought up asking the user what they want, then depending
+ on the choice, the function decrypt file or encryptfile is run. the same
+ process is carried out for a user entered string. LAStly, uppercase or lower
+ case Q exits the program
+***************************************************************************/

@@ -1,0 +1,14 @@
+/*************************************************************
+ ** IsPresent --
+ **   This function takes an array of websites and
+ ** an individual website, checks for a duplicate,
+ ** and returns either the index to the duplicate
+ ** or, if there is none, the value of the index
+ ** of the first available open location in the
+ ** array.
+ **   Inputs: The array of websites, any individual website.
+ **   Output: An index of the duplicate or the first available
+ **           location.
+ **************************************************************/ 
+
+int IsPresent(WEBSITE array[], WEBSITE newSite);

@@ -1,0 +1,24 @@
+
+int Hailstones(int num, int times);
+
+void TranslateString();
+
+void TranslateFile();
+
+void PrintMenu();
+
+void PrintSMenu();
+
+void PrintKeyTable();
+
+typedef struct key
+{
+  char input;
+  char output;
+}KEYS;
+
+void DecryptFile();
+void DecryptString();
+int DecryptHailstone(int num);
+void StringInterface();
+void FileInterface();

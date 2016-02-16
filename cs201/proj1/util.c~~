@@ -1,0 +1,76 @@
+#include"util.h"
+
+/*********************************************
+ ** Function: GetValidInt()
+ ** GetValidInt() gets an integer from the user between
+ ** specified minimum and maximum values, and will
+ ** reprompt the user until it gets one that is valid.
+ **                                                  
+ ** Inputs: min and max, the minimum. and maximum      
+ **          (inclusive) values for the entered integer 
+ ** Output: returns an integer between min and max,  
+ **          inclusively                              
+ *********************************************/    
+int GetValidInt(int min, int max)
+{
+   /* is set greater t.han max so the loop will be entered*/
+   int input = max + 1;
+
+   /* Loop assures valid input */
+   while( input < min || input > max )
+   {
+      printf("Please enter an integer between");
+      printf(" %d and %d.\n", min, max);
+      scanf("%d", &input);
+   }
+
+   return input;
+}
+
+/*********************************************
+ ** Function: GetRandomNumber
+ ** Usage:    x = GetRandomNumber();
+ **
+ ** GetRandomNumber() returns a pseudo-random integer
+ ** between the values passed into the function: low and 
+ ** high, inclusive.
+ **
+ ** Inputs: low - an int which is the lowest value 
+ **         in the range of acceptable random numbers
+ **         high - an int which is the highest value
+ **         in the range of acceptable random numbers
+ ** Output: returns a random integer between low and 
+ **         high, inclusive
+ *********************************************/
+int GetRandomNumber (int low, int high) 
+{
+   int num ;
+
+   /* Call rand() to get a large random number. */
+   num = rand() ;
+
+   /* Scale the random number within range. */
+   num = num % (high - low + 1) + low ;
+
+   return num ;
+}
+
+/*********************************************
+ ** Function: SetRandomSeed
+ ** Usage:    SetRandomSeed();
+ **
+ ** The pseudo-random number generator is seeded
+ ** with a call to time() assuring a different
+ ** seed everytime the program runs.
+ **
+ ** Inputs: None
+ ** Output: No value is returned
+ *********************************************/
+void SetRandomSeed (void) 
+{
+   int timeSeed ;
+
+   /* Use the time function to set the seed. */
+   timeSeed = (int) time(0) ;
+   srand(timeSeed) ;
+}

@@ -1,0 +1,44 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+#include "datasecurity.h"
+
+int main()
+{
+  char *choice;
+  choice = (char *) malloc(CHOICESIZE * sizeof(char)) ;
+  PrintMenu();
+  while(fscanf(stdin, "%s", choice) != '\n')
+  {
+    switch(choice[0])
+      {
+      case 'P':
+	PrintKeyTable();
+	break;
+      case 'p':
+	PrintKeyTable();
+	break;
+      case'F':
+	FileInterface();
+	break;
+      case 'f':
+	FileInterface();
+	break;
+      case 'S':
+	StringInterface();
+	break;
+      case 's':
+	StringInterface();
+      case 'Q':
+	return 0;
+	break;
+      case 'q':
+	return 0;
+	break;
+      default:
+	break;
+      }
+    PrintMenu();
+    }
+  return 0;
+}

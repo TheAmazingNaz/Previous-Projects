@@ -1,0 +1,181 @@
+/**********************************************                          
+*  File: design3.txt
+*  Author: Yakubu Nazif Wanka
+*  Date: 11/2/2008
+*  Section: 101
+*  E-Mail: yakubu1@umbc.edu
+*  
+*  Design for Project #3
+**********************************************/
+
+/********Format**********/
+int main()
+{
+	PrintGreeting
+	Read Filename
+	Read Data to Arrays
+	Break down address arrays into elements
+	Calculate Totals of Each File Type and number of hits and time
+	Calculate Vital Statistics
+	Print Results
+	Print Suggestion
+}
+
+/***************** Pound Defines and Typedefs *************************/
+
+typedef struct address
+{
+        char  accessCode[MAX_ACCESS_CODE_SIZE];
+        char  domainName[MAX_DOMAIN_SIZE];
+        char  domainEnding[MAX_DOMAIN_ENDING_SIZE];
+}ADDRESS;
+
+typedef struct website
+{
+        ADDRESS webAddress;
+        char  siteType[MAX_SITE_TYPE_SIZE];
+        int   hits;
+        int   seconds;
+}WEBSITE;
+
+#define MAX_ACCESS_CODE_SIZE 15
+#define MAX_DOMAIN_SIZE 30
+#define MAX_DOMAIN_ENDING_SIZE 4
+#define MAX_SITE_TYPE_SIZE 10
+#define MAX_SIZE 100
+
+/**************************Functions Used*****************************************/
+
+/***************************************************************
+ * Function: readNetSites
+ * 
+ * This function asks the user for the name of the data
+ * file to be used, opens it, reads the website Addresses, sorts
+ * them  and returns the .net addresses.
+ * 
+ * Usage: netSites[] = readNetSites();
+ * Inputs:  None
+ * Outputs: netSites[]
+ ***************************************************************/
+
+/***************************************************************
+ * Function: readGovSites
+ *
+ * This function asks the user for the name of the data
+ * file to be used, opens it, reads the website Addresses, sorts
+ * them  and returns the .gov addresses.
+ *
+ * Usage: govSites[] = readGovSites();
+ * Inputs:  None
+ * Outputs: govSites[]
+ ***************************************************************/
+
+/***************************************************************
+ * Function: readEduSites
+ *
+ * This function asks the user for the name of the data
+ * file to be used, opens it, reads the website Addresses, sorts
+ * them  and returns the .edu addresses.
+ *
+ * Usage: eduSites = readEduSites();
+ * Inputs:  None
+ * Outputs: eduSites[]
+ ***************************************************************/
+
+/***************************************************************
+ * Function: readComSites
+ *
+ * This function asks the user for the name of the data
+ * file to be used, opens it, reads the website Addresses, sorts
+ * them  and returns the .com addresses.
+ *
+ * Usage: comSites = readComSites();
+ * Inputs:  None
+ * Outputs: comSites[]
+ ************************************
+/*************************************************************************
+ * Function: ComputeTotals
+ * 
+ * This function calculates the total number of websites visited
+ * for each type of wesbites, calculates the total time and hits
+ * etc. 
+ *
+ * Usage:   void ComputeTotals(WEBSITE array[], int *pTotalUniqueSites,
+            int *pTotalNonUniqueSites, int *pTotalTimeLogged,
+            int *pTotalFunSites, int *pTotalSearchSites,
+            int *pTotalEducationSites, int *pTotalNewsSites);
+ *  
+ * Inputs:  pTotalUniqueSites, pTotalTimeLogged, pTotalNonUniqueSites,
+ *          pTotalTimeLogged, pTotalFunSites, pTotalFunSites,
+ *          pTotalSearchSites, pTotalEducationSites, TotalNewsSites.
+ *
+ * Outputs: Total Websites, Total Time Spent, Total  Hits
+ ***********************************************************************/
+     
+/***************************************************************
+ * Function: ArrayLength
+ *
+ * Usage: TotalGov = ArrayLength(govSites[])
+ *
+ * This function calculates the number of websites in an array
+ * Inputs: Website[]
+ * Outputs: Number of websites
+ ***************************************************************/
+
+/********************************************************************
+ * Function: IsPresent
+ *
+ * Usage: index = Ispresent(WEBSITE govsites[], WEBSITE newSite);
+ *
+ * This function checks a website against an array of websites to
+ * see if there is a duplicate, if so, it returns the index location
+ * of the duplicate, if not, then that of the first available open
+ * location is returned.
+ * Inputs : sites array, newSite
+ * Output:  Index
+ *********************************************************************/
+
+/*********************************************************************************
+ * Function: CalcStats
+ * This function calculates and prints the site hit distribution by type.
+ *
+ * Usage: CalcStats(TotalNewsSitesHits, TotalFunSSitesHits, TotalSearchSitesHits,
+                    TotalEducationSitesHit, TotalHits);
+ *
+ * Inputs: The total number of hits of each site type.
+ * Outputs: The percentage share of hits for each site type printed to stdout.
+ *********************************************************************************/
+
+/*********************************************************
+ * Function: Print Suggestion
+ * This function prints the suggestion for which content
+ * should be added to the website based on number of hits 
+ *
+ * Usage: PrintSuggestion();
+ *
+ * Inputs: None
+ * Outputs: Suggestion to stdout
+ **********************************************************/
+
+/*********************************************************
+ * Function:PrintGreeting
+ * This function prints the greeting to the user at the
+ * beginning of the program explaining what it does
+ *
+ * Usage: PrintGreeting();
+ *
+ * Inputs: None
+ * Outputs: Greeting to stdout
+ **********************************************************/
+
+/**********************Explanation********************************
+ *      What I intend to do basically, is start by, reading all
+ * the data in the .dat file starting with the addresses(which
+ * will be sorted into 4 arrays based on domain. Then I will read
+ * the total amount of hits for the sites, and amount of time spent
+ * and fill them in arrays. Then I will calculate the totals for
+ * everything after, of course, having filled my data into the 2
+ * structures, ADDRESS AND WEBSITE. Once I have my totals, I will
+ * simply use CalcStats and Calculate my percentages and print the
+ * results into a table, then proceed to print my suggestion.
+ *******************************************************************/

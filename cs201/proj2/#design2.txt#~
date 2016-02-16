@@ -1,0 +1,87 @@
+include stdio.h
+include stdlib.h
+include time.h
+
+int main()
+{
+	for every interval until time
+	{
+		get values from oilspill.dat
+		get time interval
+		get total time
+		randomly generate wind direction
+		creat 2-d array 16 by 16
+		fill array with 0
+		fill array with values from oilspill515.dat
+		call function ChangeValue to change the values according to
+		wind direction
+		print modified array
+		Create image of oilspill
+	}
+	Show Oil Spill
+}
+
+Functions Used:
+
+/********************************************************
+ ** Function: SetRandomSeed
+ ** Usage:    SetRandomSeed();
+ **
+ ** The pseudo-random number generator is seeded
+ ** with a call to time() assuring a different
+ ** seed everytime the program runs.
+ **
+ ** Inputs: None
+ ** Output: No value is returned
+ *********************************************************/
+void SetRandomSeed (void);
+
+/*********************************************************
+ ** Function: GetRandomNumber
+ ** Usage:    x = GetRandomNumber();
+ **
+ ** GetRandomNumber() returns a random number between low
+ ** and high in this case being 1 and 4 in order to
+ ** determine the wind direction of the oilspill.
+ **
+ ** Inputs: low - an int which is the lowest value in this
+ **	    case being 1 which represents north
+ **         high - an int which is the highest value in
+ **	    this case being 4 which is west.
+ ** Output: returns a random integer between low and
+ **         high, which then represents the wind direction
+ *********************************************************/
+int GetRandomNumber (int low, int high);				
+
+/**********************************************************************
+ ** Function:	ChangeValue
+ ** Usage:	int x[SIZE][SIZE] = ChangeValue(int array[SIZE][SIZE]);
+ **
+ ** ChangeValue() takes in the 2 dimensional array with all the
+ ** values of oil and distributes them to simulate the spreading
+ ** of the oil.
+ **
+ ** Inputs:	The 2 dimensional array
+ ** Outputs:	The modified 2 dimensional array
+ **********************************************************************/
+
+/**********************************************************
+** CreatePPM --
+** This function creates a PPM picture file from an Array.
+**
+** Inputs: Array of integers, time of creation
+** Output: NONE
+**********************************************************/
+
+void CreatePPM(int array [][15], int time);
+
+/****************************************************************
+** ShowOilSpill --
+** This function creates an animated gif from PPM files in your
+** directory.
+**
+** Inputs: Number of images, increment of filenames
+** Output: NONE
+****************************************************************/
+
+void ShowOilSpill(int numFrames, int step);
