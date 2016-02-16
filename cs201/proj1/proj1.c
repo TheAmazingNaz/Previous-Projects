@@ -4,7 +4,7 @@
  ** Created:       09/27/2008
  ** Last Modified: 10/01/2008
  **
- **   This file contains the main driver program for project 4.
+ **   This file contains the main driver program for project 1.
  ** This program takes the Foreign currency, Foreign Time, or Foreign temperature,
  ** converts them to local values(Dollars, 12-hour-format, and Fahrenheit then
  ** displays the results in the format specified in the project description.
