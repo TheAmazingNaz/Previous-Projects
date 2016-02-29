@@ -1,0 +1,77 @@
+LOAD Bill's Beans 1200 20 15 30
+	Item loaded
+LOAD Tammy's Tomatoes 600 6 6 6
+	Item loaded
+LOAD Lots of Meat 3000 20 20 20
+	Item loaded
+LOAD Chicago Bull's 1000 10 10 10
+	Item loaded
+LOAD Ken's Cookies 1500 15 15 15
+	Item loaded
+LAUNCH: Miami
+PRINT
+MinSpeed: 5
+MaxSpeed: 25
+Current Speed: 5
+MaxItems: 100
+Under way from Baltimore to Miami at 5 knots
+	Bill's Beans	15 x 1200 x 20	30
+	Chicago Bull's	10 x 1000 x 10	10
+	Ken's Cookies	15 x 1500 x 15	15
+	Lots of Meat	20 x 3000 x 20	20
+	Tammy's Tomatoes	6 x 600 x 6	6
+
+SPEED: 20
+	Speed Change complete
+PRINT
+MinSpeed: 5
+MaxSpeed: 25
+Current Speed: 20
+MaxItems: 100
+Under way from Baltimore to Miami at 20 knots
+	Bill's Beans	15 x 1200 x 20	30
+	Chicago Bull's	10 x 1000 x 10	10
+	Ken's Cookies	15 x 1500 x 15	15
+	Lots of Meat	20 x 3000 x 20	20
+	Tammy's Tomatoes	6 x 600 x 6	6
+
+DOCK
+PRINT
+MinSpeed: 5
+MaxSpeed: 25
+Current Speed: 0
+MaxItems: 100
+In Port at Miami
+	Bill's Beans	15 x 1200 x 20	30
+	Chicago Bull's	10 x 1000 x 10	10
+	Ken's Cookies	15 x 1500 x 15	15
+	Lots of Meat	20 x 3000 x 20	20
+	Tammy's Tomatoes	6 x 600 x 6	6
+
+SPEED: 12
+	CMD ERROR: INCREASE speed request while in port
+LOAD Linda's Lace 200 20 30 40
+	Item loaded
+UNLOAD Martha's Minks
+	Item not found
+UNLOAD Chicago Bull's
+	Item unloaded
+UNLOAD Bill's Beans
+	Item unloaded
+UNLOAD Lots of Meat
+	Item unloaded
+UNLOAD Tammy's Tomatoes
+	Item unloaded
+UNLOAD Ken's Cookies
+	Item unloaded
+UNLOAD Pete's Peppers
+	Item not found
+PRINT
+MinSpeed: 5
+MaxSpeed: 25
+Current Speed: 0
+MaxItems: 100
+In Port at Miami
+	Linda's Lace	30 x 200 x 20	40
+
+QUIT
